@@ -24,7 +24,7 @@ pipeline {
                 sh '''
                 docker stop nodeappcontainer || true
                 docker rm nodeappcontainer || true
-                docker run -d --name nodeappcontainer -p 8081:8080 nodeapp
+                docker run -d --name nodeappcontainer -p 8081:3000 nodeapp
                 '''
             }
         }

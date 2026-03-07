@@ -9,9 +9,11 @@ pipeline {
         }
         stage('DEPENDENCY') {
             steps {
+                dir('app'){
                sh 'npm install'
             }
         }
+    }
         stage('BUILD DOCKER') {
             steps {
                sh 'docker build -t nodeapp .'

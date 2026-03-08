@@ -2,7 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_REPO = 'sivav2516/nodejs-devops-app'
+        DOCKER_USER = "sivav2516"
+        IMAGE_NAME = "take_it"
+        IMAGE_TAG = "0.1"
     }
 
     stages {
@@ -34,29 +36,22 @@ pipeline {
             }
         }
 
-        stage('DOCKER LOGIN & PUSH') {
+        stage('Push to DockerHub') {
             steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'DOCKER_CRED',
-                    usernameVariable: 'sivav2516',
-                    passwordVariable: 'sivav2516'
-                )]) {
+                withCredentials([usernamePassword(credentialsId: 'Docker_cred', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     sh '''
-                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-                        docker tag nodeapp $DOCKER_HUB_REPO:latest
-                        docker push $DOCKER_HUB_REPO:latest
+                    echo "$PASS" | docker login -u "$USER" --password-stdin
+                    docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
+                    docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
                     '''
                 }
             }
         }
 
-        stage('RUN CONTAINER') {
+        stage('Run Container') {
             steps {
-                sh '''
-                    docker stop nodeappcontainer || true
-                    docker rm nodeappcontainer || true
-                    docker run -d --name nodeappcontainer -p 8083:3000 $DOCKER_HUB_REPO:latest
-                '''
+                sh 'docker rm -f take_it || true'
+                sh 'docker run -d -p 5121:8080 --name take_it ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}'
             }
         }
 

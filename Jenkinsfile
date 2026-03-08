@@ -28,7 +28,7 @@ pipeline {
 
         stage('DOCKER LOGIN & PUSH') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'Kalyan_Docker_Cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'DOCKER_CRED', usernameVariable: 'sivav2516', passwordVariable: 'sivav2516')]) {
                     sh '''
                         echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
                         docker tag nodeapp $DOCKER_HUB_REPO:latest

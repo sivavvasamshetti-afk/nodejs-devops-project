@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('GIT CHECKOUT') {
             steps {
-                git branch: 'main', credentialsId: 'Kalyan_GIT_Cred', url: 'https://github.com/kalyansagar5/nodejs-devops-project.git'
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'SHIVACRED', url: 'https://github.com/sivavvasamshetti-afk/nodejs-devops-project.git']])
             }
         }
 

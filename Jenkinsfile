@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_REPO = 'kalyansagar5/nodejs-devops-app' // Docker Hub repo
+        DOCKER_HUB_REPO = 'sivav2516/nodejs-devops-app' // Docker Hub repo
     }
 
     stages {
@@ -43,7 +43,7 @@ pipeline {
                 sh '''
                     docker stop nodeappcontainer || true
                     docker rm nodeappcontainer || true
-                    docker run -d --name nodeappcontainer -p 8081:3000 $DOCKER_HUB_REPO:latest
+                    docker run -d --name nodeappcontainer -p 8083:3000 $DOCKER_HUB_REPO:latest
                 '''
             }
         }
